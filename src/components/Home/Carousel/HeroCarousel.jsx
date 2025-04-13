@@ -10,9 +10,9 @@ import 'swiper/css/navigation';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import CarouselSlide from './CarouselSlide';
-import book from '../../assets/images/bookimage.jpg'
-import hoodie from '../../assets/images/hoodie.png'
-import laptop from '../../assets/images/laptop.png'
+import book from '../../../assets/images/bookimage.jpg'
+import hoodie from '../../../assets/images/hoodie.png'
+import laptop from '../../../assets/images/laptop.png'
 
 
 const HeroCarousel = () => {

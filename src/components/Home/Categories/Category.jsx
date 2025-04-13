@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import apiClient from '../../services/api-client';
+import apiClient from '../../../services/api-client';
 import CategoriItems from './CategoriItems';
 
 const Category = () => {

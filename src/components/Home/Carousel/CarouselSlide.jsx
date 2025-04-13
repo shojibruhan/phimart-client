@@ -1,5 +1,5 @@
 import React from 'react';
-import bgBannerimg from '../../assets/images/bg-banner-image.jpg'
+import bgBannerimg from '../../../assets/images/bg-banner-image.jpg'
 const CarouselSlide = ({title, subtitle, image}) => {
     
     return (

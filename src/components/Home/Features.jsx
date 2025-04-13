@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaShoppingCart } from "react-icons/fa";
 import { MdVerified } from "react-icons/md";
 import { FaTags } from "react-icons/fa";
