@@ -13,6 +13,16 @@ import { Link } from "react-router";
 
 
 const Sidebar = () => {
+    const MenuItems= [
+        {to: '/dashboard', icon: FiBarChart2, label:"Dashboard"},
+        {to: '/products', icon: FiPackage, label:"Product"},
+        {to: '/products/add', icon: FiPlusCircle, label:"Add Product"},
+        {to: '/categories', icon: FiTag, label:"Categories"},
+        {to: '/categories/add', icon: FiPlusCircle, label:"Add Category"},
+        {to: '/orders', icon: FiShoppingCart, label:"Orders"},
+        {to: '/reviews', icon: FiStar, label:"Reviews"},
+        {to: '/users', icon: FiUser, label:"Users"},
+    ]
     return (
         <div className='drawer-side z-10'>
             <label 
@@ -31,56 +41,14 @@ const Sidebar = () => {
 
                 {/* Sidebar Menu  */}
                 <ul className='menu menu-md gap-2'>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiBarChart2 className='h-4 w-4'/>
-                            <span>Dashboard</span>
+                    {MenuItems.map((item, index) =>(
+                        <li key={index}> 
+                        <Link to={item.to} className='flex items-center'>
+                        <item.icon className='h-4 w-4'/>
+                            <span> {item.label} </span>
                         </Link>
                     </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiPackage className='h-4 w-4'/>
-                            <span>Product</span>
-                        </Link>
-                    </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiPlusCircle className='h-4 w-4'/>
-                            <span>Add Product</span>
-                        </Link>
-                    </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiTag className='h-4 w-4'/>
-                            <span>Categories</span>
-                        </Link>
-                    </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiPlusCircle className='h-4 w-4'/>
-                            <span>Add Category</span>
-                        </Link>
-                    </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiShoppingCart className='h-4 w-4'/>
-                            <span>Order</span>
-                        </Link>
-                    </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiStar className='h-4 w-4'/>
-                            <span>Review</span>
-                        </Link>
-                    </li>
-                    <li > 
-                        <Link to='#' className='flex items-center'>
-                        <FiUser className='h-4 w-4'/>
-                            <span>User</span>
-                        </Link>
-                    </li>
-                  
-                    
+                    ))}
                 </ul>
 
                 {/* Sidebar Footer */}

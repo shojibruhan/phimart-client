@@ -10,12 +10,15 @@ import Register from '../pages/Register';
 import Dashboard from '../pages/Dashboard';
 import PrivateRoute from '../components/PrivateRoute';
 import ActivateAccount from '../components/Registration/ActivateAccount';
+import DashboardLayout from '../layouts/DashboardLayout';
+import Profile from '../pages/Profile';
 
 const AppRoutes = () => {
     return (
         <Routes>
-            {/* <Route index element={<Home />}></Route>
-            <Route path='about' element={<About />} /> */}
+            
+            {/* Public Routes */}
+
             <Route element={<MainLayout />}>
                 <Route path='/' element={<Home />} />
                 <Route path='products' element={<Product />} />
@@ -27,15 +30,23 @@ const AppRoutes = () => {
                 {/* <Route path='activate' element={<ActivateAccount />} /> */}
 
             </Route>
+
+            {/* Private Route  */}
             
             <Route 
                 path='dashboard'
                 element={
                     <PrivateRoute>
-                        <Dashboard />
+                        <DashboardLayout />
                     </PrivateRoute>
-            } 
-            />
+                } >
+                <Route index element={ <Dashboard />} />
+                <Route path='profile' element={<Profile />} />
+                    
+                    
+            
+                
+            </Route>
         </Routes>
     );
 };
