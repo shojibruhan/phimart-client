@@ -1,17 +1,22 @@
 import React from 'react';
 
-const ProfileButton = ({isEditing, setEditing}) => {
+const ProfileButton = ({isEditing, setEditing, isSubmitting}) => {
     return (
         <div className='flex justify-center pt-4'>
             {isEditing ? (
                 
                 <div className='space-x-28 my-4'>
                     <button
-                    type='button'
+                    type='submit'
                     className='btn btn-primary px-8'
+                    disabled={isSubmitting}
                     
                     >
-                        Save Changes
+                        {isSubmitting ? <div>
+                                <span className="loading loading-ball loading-md"></span>
+                                <span className="loading loading-ball loading-md"></span>
+                                <span className="loading loading-ball loading-md"></span>
+                        </div>: "Save Changes"}
                     </button>
                     <button
                         type='button'

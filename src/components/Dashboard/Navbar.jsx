@@ -34,7 +34,7 @@ const Navbar = ({sidebarOpen}) => {
                 >
                     <li>
                         <Link 
-                            href="/profile"
+                            to="/dashboard/profile"
                             className='justify-between'>
                             Profile
                             <span className='badge'>New</span>

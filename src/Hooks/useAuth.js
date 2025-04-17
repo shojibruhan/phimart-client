@@ -16,6 +16,21 @@ const useAuth = () => {
     useEffect(()=> {
         if(authTokens) fetchUserProfile()
     }, [authTokens])
+
+
+    const handleAPIError= (error, defaultMessage) => {
+        if (error.response && error.response.data){
+            const errorMessage= Object.values(error.response.data)
+            .flat()
+            .join("\n")
+            setErrorMsg(errorMessage)
+            console.log(errorMessage);
+            return {success: false, message: errorMessage}
+        }
+        setErrorMsg(defaultMessage)
+        return {success: false, message: defaultMessage}
+    }
+
     // Fetch User
     const fetchUserProfile= async() => {
         try {
@@ -50,18 +65,39 @@ const useAuth = () => {
             await apiClient.post("/auth/users/", userData)
             return {success: true, message: "Registration Complete Successfully. Redirecting...."}
         } catch (error) {
-            if (error.response && error.response.data){
-                const errorMessage= Object.values(error.response.data)
-                .flat()
-                .join("\n")
-                setErrorMsg(errorMessage)
-                console.log(errorMessage);
-                return {success: false, message: errorMessage}
-            }
-            setErrorMsg("Registration Failed. Please Try Again ")
-            return {success: false, message: "Registration Failed. Please Try Again"}
+            return handleAPIError(error, "Registration Failed. Try again letter" )
         }
     }
+
+    // Update User Profile
+    const updateUserProfile= async(userData) => {
+        setErrorMsg("")
+        try {
+            await apiClient.put("/auth/users/me/", userData, {
+                headers: {Authorization: `JWT ${authTokens?.access}`
+        }})
+        return {success: true, message: "Update User Profile Successfully."}
+
+        } catch (error) {
+            return handleAPIError(error)
+            
+        }
+    }
+
+    // Change Password
+    const changePassword= async(userData) =>{
+        setErrorMsg("")
+        try {
+            await apiClient.post("/auth/users/set_password/", userData, {
+                headers: {Authorization: `JWT ${authTokens?.access}`
+        }})
+        
+        } catch (error) {
+            return handleAPIError(error)
+        }
+    }
+    
+        
 
     // Logout User
     const logoutUser= () => {
@@ -70,7 +106,15 @@ const useAuth = () => {
         localStorage.removeItem("authTokens")
     }
 
-    return {user, loginUser, errorMsg, registerUser, logoutUser}
+    return {
+        user, 
+        loginUser, 
+        errorMsg, 
+        registerUser, 
+        updateUserProfile,
+        changePassword, 
+        logoutUser
+    }
 };
 
 export default useAuth;

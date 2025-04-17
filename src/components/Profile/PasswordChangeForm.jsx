@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const PasswordChangeForm = ( {register, errors, watch, isEditing} ) => {
     
     const [togglePaswordOpen, setTogglePaswordOpen]= useState(false)
+    const [showPassword, setShowPassword]= useState(false)
     return (
         <div className='mt-4'>
             <button
@@ -17,10 +18,10 @@ const PasswordChangeForm = ( {register, errors, watch, isEditing} ) => {
                     <label className="label">Current Password</label>
                     <div className='relative'>
                         <input
-                            type='password' 
+                            type={showPassword ? 'text' : 'password' }
                             className='input input-bordered w-full pr-10 bg-base-200'
                             disabled={!isEditing} 
-                            {...register("current_pasword", {
+                            {...register("current_password", {
                                 required: "Current Password is Required",
                             })}
                         />
@@ -34,10 +35,10 @@ const PasswordChangeForm = ( {register, errors, watch, isEditing} ) => {
                     <label className="label">New Password</label>
                     <div className='relative'>
                         <input 
-                            type='password'
+                            type={showPassword ? 'text' : 'password' }
                             className='input input-bordered w-full pr-10 bg-base-200'
                             disabled={!isEditing} 
-                            {...register("new_pasword", {
+                            {...register("new_password", {
                                 required: "New Password is Required",
                                 minLength: {
                                     value:8,
@@ -61,17 +62,35 @@ const PasswordChangeForm = ( {register, errors, watch, isEditing} ) => {
                     <label className="label">Confirm New Password</label>
                     <div className='relative'>
                         <input 
-                            type='password' 
+                            type={showPassword ? 'text' : 'password' }
                             className='input input-bordered w-full pr-10 bg-base-200'
                             disabled={!isEditing} 
-                            {...register("confirm_new_pasword", {
+                            {...register("confirm_new_password", {
                                 validate: (value) =>
-                                    value === watch("new_pasword") || "Passwords do not match",
+                                    value === watch("new_password") || "Passwords do not match",
                             })}
                         />
                     </div>
                     {errors.confirm_new_pasword && (
                         <p className='text-red-500 text-sm mt-1'>{errors.confirm_new_pasword.message}</p>
+                    )}
+                </div>
+
+                {/* Show Password */}
+                <div>
+                    {isEditing && (
+                        <div className='form-control'>
+                            <label className="label cursor-pointer">
+                                <span className='label-text'>Show Password</span>
+                                <input 
+                                    type="checkbox" 
+                                    className='toggle' 
+                                    checked={showPassword}
+                                    onChange={()=> {setShowPassword(!showPassword)}}
+                                />
+                            </label>
+                            
+                        </div>
                     )}
                 </div>
             </div>
