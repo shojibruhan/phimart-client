@@ -2,7 +2,7 @@ import React from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 
 const CartItemList = ({items, handleUpdateQuantity}) => {
-    if (items.length === 0) { 
+    if (items?.length === 0) { 
         return <div className='py-6 text-center font-bold  text-gray-500 text-3xl'>Your Cart is Empty</div>
     }
     return (
@@ -39,6 +39,7 @@ const CartItemList = ({items, handleUpdateQuantity}) => {
                                             className="input input-xs input-bordered join-item w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                                         />
                                         <button 
+                                            value={item.qunaity}
                                             onClick={() => handleUpdateQuantity(item.id, item.qunaity+1)}
                                             className='btn btn-xs btn-outline join-item'>
                                             +

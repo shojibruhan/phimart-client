@@ -26,14 +26,15 @@ const Carts = () => {
     return (
         <div className='flex justify-between'>
            <div>
-            <Suspense fallback={<p>Loading. . . . . . .</p>}>
+            {/* <Suspense fallback={<p>Loading. . . . . . .</p>}> */}
                 <CartItemList 
                     items={cart.items} 
                     handleUpdateQuantity={handleUpdateQuantity} 
                 />
-            </Suspense>
+            {/* </Suspense> */}
            </div>
            <div>
+            <h1 className='text-lg font-bold'>Cart Summery</h1>
 
            </div>
             
