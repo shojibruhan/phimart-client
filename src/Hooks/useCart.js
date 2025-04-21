@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import authApiClient from '../services/auth-api-client';
 
 const useCart = () => {
@@ -26,7 +26,7 @@ const useCart = () => {
                 setLoading(false)
             }
            
-        }, [authToken, cartID]
+        }, [cartID]
     )
 
     // Add items to the cart
@@ -52,21 +52,48 @@ const useCart = () => {
     // Update item quantity
 
     const updateCartItemQuantity= useCallback(async(itemId, quantity) => {
-        setLoading(true)
+        
         try {
-            await authApiClient.patch(`/carts/${cartID}/items/${itemId}`, {quantity,})
+            await authApiClient.patch(`/carts/${cartID}/items/${itemId}/`, {quantity,})
+            
         } catch (error) {
             console.log(error);
-        } finally {
+        } 
+    }, [cartID])
+
+    // Delete cart item
+    // const deleteCartItem= useCallback(async(itemId) => {
+    // // const deleteCartItem= useCallback(async(itemId) => {
+    //     try {
+    //         await authApiClient.delete(`/carts/${cartID}/items/${itemId}/`)
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // })
+
+    const deleteCartItem= useCallback(async(itemId) => {
+        try {
+            await authApiClient.delete(`/carts/${cartID}/items/${itemId}/`)
+        } catch (error) {
+            console.log(error);
+        }
+    }, [cartID])    
+
+    useEffect(()=> {
+        const initializeCart= async() => {
+            setLoading(true)
+            await createOrGetCart()
             setLoading(false)
         }
-    }, [cartID])
+        initializeCart()
+    }, [createOrGetCart])
 
     return {
         cart, 
         createOrGetCart,
         AddCartItem,
         updateCartItemQuantity,
+        deleteCartItem,
         loading,
     }
 };

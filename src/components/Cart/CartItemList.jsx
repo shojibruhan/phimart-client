@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 
-const CartItemList = ({items, handleUpdateQuantity}) => {
+const CartItemList = ({items, handleUpdateQuantity, handleRemoveItem}) => {
     if (items?.length === 0) { 
         return <div className='py-6 text-center font-bold  text-gray-500 text-3xl'>Your Cart is Empty</div>
     }
@@ -27,7 +27,7 @@ const CartItemList = ({items, handleUpdateQuantity}) => {
                                 <td>
                                     <div className='flex items-center join'>
                                         <button 
-                                            onClick={() => handleUpdateQuantity(item.id, item.qunaity-1)}
+                                            onClick={() => handleUpdateQuantity(item.id, Math.max(1, item.quantity-1))}
                                             className='btn btn-xs btn-outline join-item'
                                         >
                                             -
@@ -35,22 +35,25 @@ const CartItemList = ({items, handleUpdateQuantity}) => {
                                         <input 
                                             type="number" 
                                             min="1" 
+                                            value={item.quantity}
                                             onChange={(e) => handleUpdateQuantity(item.id, e.target.value)}
                                             className="input input-xs input-bordered join-item w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
                                         />
+                                        
                                         <button 
-                                            value={item.qunaity}
-                                            onClick={() => handleUpdateQuantity(item.id, item.qunaity+1)}
+                                            onClick={() => handleUpdateQuantity(item.id, item.quantity+1)}
                                             className='btn btn-xs btn-outline join-item'>
                                             +
                                         </button>
 
                                     </div>
                                 </td>
-                                <td className='text-right font-medium'>$2000</td>
+                                <td className='text-right font-medium'>${item.total_price}</td>
                                 <td>
                                     <button
                                         className='btn btn-ghost btn-xs btn-circle'
+                                        onClick={() => handleRemoveItem(item.id)}
+                                        aria-label={`Remove ${item.name} from cart`}
                                     >
                                         <FaRegTrashAlt className='h-3 w-4' /></button>
                                 </td>
