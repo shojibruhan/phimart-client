@@ -5,7 +5,14 @@ import CartSummery from '../components/Cart/CartSummery';
 
 const Carts = () => {
 
-    const {cart, loading, createOrGetCart, updateCartItemQuantity, deleteCartItem}= useCartContext()
+    const {
+        cart, 
+        cartId, 
+        loading, 
+        createOrGetCart, 
+        updateCartItemQuantity, 
+        deleteCartItem
+    }= useCartContext()
     const [localCart, setLocalCart]= useState(cart)
 
     useEffect(() => {
@@ -87,17 +94,20 @@ const Carts = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                 <div>
                     {/* <Suspense fallback={<p>Loading. . . . . . .</p>}> */}
-                        <CartItemList 
-                            items={localCart.items} 
-                            handleUpdateQuantity={handleUpdateQuantity}
-                            handleRemoveItem={handleRemoveItem} 
-                        />
+                        <Suspense fallback= {<p>Loading</p>}>
+                            <CartItemList 
+                                items={localCart.items} 
+                                handleUpdateQuantity={handleUpdateQuantity}
+                                handleRemoveItem={handleRemoveItem} 
+                            />
+                            </Suspense>
                     {/* </Suspense> */}
                 </div>
                 <div>
                     <CartSummery 
                         totalPrice={localCart.total_price}
                         itemCount={localCart.items.length}
+                        cartId={cartId}
                     />
 
                 </div>

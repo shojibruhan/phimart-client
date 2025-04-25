@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useEffect, useState} from "react"
 import apiClient from "../services/api-client";
 const useAuth = () => {
@@ -50,9 +50,15 @@ const useAuth = () => {
             const response= await apiClient.post("/auth/jwt/create/", userData)
             setAuthTokens(response.data)
             localStorage.setItem("authTokens", JSON.stringify(response.data))
+
+            // After login fetch user
+            await fetchUserProfile();
+            return {success: true}
             
         } catch (error) {
             setErrorMsg(error.response.data?.detail);
+            return {success: true}
+
         }
     }
 
@@ -104,6 +110,7 @@ const useAuth = () => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem("authTokens")
+        localStorage.removeItem("cartId")
     }
 
     return {

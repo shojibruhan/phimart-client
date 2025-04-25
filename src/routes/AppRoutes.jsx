@@ -14,6 +14,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import Profile from '../pages/Profile';
 import ProductDetails from '../pages/ProductDetails';
 import Carts from '../pages/Carts';
+import Orders from '../pages/Orders';
 
 const AppRoutes = () => {
     return (
@@ -45,8 +46,7 @@ const AppRoutes = () => {
                 <Route index element={ <Dashboard />} />
                 <Route path='profile' element={<Profile />} />
                 <Route path='carts' element={<Carts />} />
-                {/* <Route path='carts' element={<Carts />} /> */}
-                    
+                <Route path='orders' element={<Orders />} />    
                     
             
                 

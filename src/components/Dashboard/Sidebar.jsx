@@ -1,4 +1,6 @@
 import React from 'react';
+import useAuthContext from "../../Hooks/useAuthContext.js"
+
 import { 
     FiBarChart2,
     FiPackage,
@@ -7,22 +9,37 @@ import {
     FiStar,
     FiTag,
     FiUser,
-    FiDatabase 
+    FiCommand,
+    FiDatabase,
+     
 } from 'react-icons/fi';
 import { Link } from "react-router";
 
 
 const Sidebar = () => {
-    const MenuItems= [
+    const {user}= useAuthContext()
+    
+
+    const CustomerMenus= [
+        {to: '/dashboard', icon: FiBarChart2, label:"Dashboard"},
+        {to: '/dashboard/orders', icon: FiCommand, label:"Orders"},
+        {to: '/dashboard/carts', icon: FiShoppingCart, label:"Carts"},
+        {to: '/reviews', icon: FiStar, label:"Reviews"},
+    ];
+
+    const adminMenu= [
         {to: '/dashboard', icon: FiBarChart2, label:"Dashboard"},
         {to: '/products', icon: FiPackage, label:"Product"},
         {to: '/products/add', icon: FiPlusCircle, label:"Add Product"},
         {to: '/categories', icon: FiTag, label:"Categories"},
         {to: '/categories/add', icon: FiPlusCircle, label:"Add Category"},
-        {to: '/orders', icon: FiShoppingCart, label:"Orders"},
+        {to: '/dashboard/orders', icon: FiCommand, label:"Orders"},
+        {to: '/dashboard/carts', icon: FiShoppingCart, label:"Carts"},
         {to: '/reviews', icon: FiStar, label:"Reviews"},
         {to: '/users', icon: FiUser, label:"Users"},
-    ]
+    ];
+
+    const menuItems= user.is_staff ? adminMenu : CustomerMenus
     return (
         <div className='drawer-side z-10'>
             <label 
@@ -41,7 +58,7 @@ const Sidebar = () => {
 
                 {/* Sidebar Menu  */}
                 <ul className='menu menu-md gap-2'>
-                    {MenuItems.map((item, index) =>(
+                    {menuItems.map((item, index) =>(
                         <li key={index}> 
                         <Link to={item.to} className='flex items-center'>
                         <item.icon className='h-4 w-4'/>

@@ -5,18 +5,19 @@ const useCart = () => {
     const [authToken]= useState(() => JSON.parse(localStorage.getItem("authTokens"))?.access)
    
     const [cart, setCart]= useState(null)
-    const [cartID, setCartID]= useState(() => localStorage.getItem("cartID"))
+    const [cartId, setcartId]= useState(() => localStorage.getItem("cartId"))
     const [loading, setLoading]= useState(false)
     // Create Cart 
     const createOrGetCart = useCallback(async() => {
             setLoading(true)
             // console.log("create Cart ", authToken);
             try {
+                console.log(authToken);
                 const response = await authApiClient.post("/carts/")
-                if(!cartID) {
-                    localStorage.setItem("cartID", response.data.id) 
-                    setCartID(response.data.id)
-                    // console.log("!cartID" ,response.data.id);
+                if(!cartId) {
+                    localStorage.setItem("cartId", response.data.id) 
+                    setcartId(response.data.id)
+                    // console.log("!cartId" ,response.data.id);
                 }
                 setCart(response.data)
                 // console.log("setCart: ", response.data);
@@ -26,15 +27,15 @@ const useCart = () => {
                 setLoading(false)
             }
            
-        }, [cartID]
+        }, [authToken, cartId]
     )
 
     // Add items to the cart
     const AddCartItem = useCallback(async(product_id, quantity) => {
         setLoading(true)
-        if(!cartID) await createOrGetCart();
+        if(!cartId) await createOrGetCart();
         try {
-            const response = await authApiClient.post(`/carts/${cartID}/items/`, {
+            const response = await authApiClient.post(`/carts/${cartId}/items/`, {
                 product_id, 
                 quantity
             })
@@ -46,7 +47,7 @@ const useCart = () => {
             setLoading(false)
         }
         
-    }, [cartID, createOrGetCart])
+    }, [cartId, createOrGetCart])
 
 
     // Update item quantity
@@ -54,18 +55,18 @@ const useCart = () => {
     const updateCartItemQuantity= useCallback(async(itemId, quantity) => {
         
         try {
-            await authApiClient.patch(`/carts/${cartID}/items/${itemId}/`, {quantity,})
+            await authApiClient.patch(`/carts/${cartId}/items/${itemId}/`, {quantity,})
             
         } catch (error) {
             console.log(error);
         } 
-    }, [cartID])
+    }, [cartId])
 
     // Delete cart item
     // const deleteCartItem= useCallback(async(itemId) => {
     // // const deleteCartItem= useCallback(async(itemId) => {
     //     try {
-    //         await authApiClient.delete(`/carts/${cartID}/items/${itemId}/`)
+    //         await authApiClient.delete(`/carts/${cartId}/items/${itemId}/`)
     //     } catch (error) {
     //         console.log(error);
     //     }
@@ -73,11 +74,11 @@ const useCart = () => {
 
     const deleteCartItem= useCallback(async(itemId) => {
         try {
-            await authApiClient.delete(`/carts/${cartID}/items/${itemId}/`)
+            await authApiClient.delete(`/carts/${cartId}/items/${itemId}/`)
         } catch (error) {
             console.log(error);
         }
-    }, [cartID])    
+    }, [cartId])    
 
     useEffect(()=> {
         const initializeCart= async() => {
@@ -89,7 +90,8 @@ const useCart = () => {
     }, [createOrGetCart])
 
     return {
-        cart, 
+        cart,
+        cartId, 
         createOrGetCart,
         AddCartItem,
         updateCartItemQuantity,

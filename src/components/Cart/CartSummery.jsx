@@ -1,7 +1,40 @@
-const CartSummery = ({totalPrice, itemCount}) => {
+import authApiClient from "../../services/auth-api-client";
+
+const CartSummery = ({totalPrice, itemCount, cartId}) => {
     const shipping = itemCount === 0 || totalPrice > 100 ? 0 : 10
     const tax= totalPrice * .1
     const orderTotal= totalPrice + shipping + tax
+
+    const deletecart= () => {
+        localStorage.removeItem("cartId")
+    }
+
+
+    const createOrder= async() => {
+        try {
+            const order= await authApiClient.post("/orders/", {cart_id:cartId})
+            console.log("order:", order);
+            console.log("cartId: ", cartId);
+            
+            console.log(order);
+            if (order.status === 201) {
+                deletecart()
+                alert("Order Place Successfully!!!")
+            }
+        } catch (error) {
+            console.log(cartId);
+            console.log("error: ", error);
+            if (!cartId) {
+                console.log("cartId is missing!");
+                return;
+              }
+              
+        }
+    }
+
+
+
+
     return (
         <div className='card bg-base-100 shadow-xl'>
             <div className='card-body'>
@@ -27,7 +60,10 @@ const CartSummery = ({totalPrice, itemCount}) => {
                     </div>
                 </div>
                 <div className='card-actions justify-end mt-4'>
-                    <button className='btn btn-primary w-full'>Proceed to Checkout</button>
+                    <button
+                        onClick={createOrder} 
+                        disabled= {itemCount === 0}
+                        className='btn btn-primary w-full'>Proceed to Checkout</button>
                 </div>
             </div>
         </div>

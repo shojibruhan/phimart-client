@@ -1,5 +1,3 @@
-// import useAuthContext from '../Hooks/useAuthContext';
-
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import useAuthContext from "../Hooks/useAuthContext";
@@ -14,15 +12,15 @@ const Login  = () => {
         formState: {errors}
     } = useForm()
 
-    const {user, loginUser, errorMsg}= useAuthContext()
+    const {loginUser, errorMsg}= useAuthContext()
     const [isloading, setloading]= useState(false)
     const navigate= useNavigate()
 
     const onSubmit = async (data) => {
         setloading(true)
         try {
-            await loginUser(data)
-            navigate("/dashboard")  
+            const response= await loginUser(data);
+            if(response.success) navigate("/dashboard");  
         } catch (error) {
             console.log("Log in Failed", error);
         } finally {
@@ -95,13 +93,3 @@ const Login  = () => {
 };
 
 export default  Login;
-
-// {
-//     <div>
-//         <h1>Log in Page</h1>
-//         <button
-//         className='btn btn-secondary'
-//         onClick={() => loginUser("admin@admin.com", "1234")}
-//         >Log In </button>
-//     </div>
-// }
