@@ -5,6 +5,7 @@ import authApiClient from "../../services/auth-api-client";
 
 const OrderCard = ({order, onCancel}) => {
     const [status, setStatus]= useState(order.status)
+    const [loading, setLoading]= useState(false)
     
     const handleStatusChange= async(event) => {
         const newStatus= event.target.value
@@ -18,6 +19,28 @@ const OrderCard = ({order, onCancel}) => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handlePayment= async() => {
+        setLoading(true)
+        try {
+            const response= await authApiClient.post("/payment/initiate/", {
+                amount: order.total_price,
+                orderId: order.id,
+                num_items:order.items?.length,
+            })
+            console.log(response);
+            if (response.data.payment_url) {
+                setLoading(false)
+                window.location.href= response.data.payment_url
+            } 
+            else {
+                alert("Payment Failed")
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     const {user}= useAuthContext()
@@ -80,8 +103,11 @@ const OrderCard = ({order, onCancel}) => {
                     </div>
                 </div>
                 {!user.is_staff && order.status === "Not Paid" && (
-                <button className="bg-blue-500 hover:bg-blue-600 text-white transition-colors rounded-lg px-4 py-2 mt-4">
-                    Pay Now
+                <button 
+                    onClick={handlePayment}
+                    disabled={loading}
+                    className="bg-blue-500 hover:bg-blue-600 text-white transition-colors rounded-lg px-4 py-2 mt-4">
+                   {loading ? <span className="loading loading-ball loading-sm"></span> : " Pay Now"}
                 </button>
                 )}
             </div>

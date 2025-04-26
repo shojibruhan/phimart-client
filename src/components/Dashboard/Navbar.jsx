@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import useAuthContext from '../../Hooks/useAuthContext';
 
 const Navbar = ({sidebarOpen}) => {
-    const {logoutUser} = useAuthContext()
+    const {user, logoutUser} = useAuthContext()
     return (
         <div className='navbar bg-base-100 border-b'>
            <div className='flex-none lg:hidden'>
@@ -38,7 +38,7 @@ const Navbar = ({sidebarOpen}) => {
                         <Link 
                             to="/dashboard/profile"
                             className='justify-between'>
-                            Profile
+                            {user.first_name} Profile
                             <span className='badge'>New</span>
                         </Link>
                     </li>
