@@ -16,6 +16,7 @@ import ProductDetails from '../pages/ProductDetails';
 import Carts from '../pages/Carts';
 import Orders from '../pages/Orders';
 import PaymentSuccess from '../pages/PaymentSuccess';
+import AddProduct from '../pages/AddProduct';
 
 const AppRoutes = () => {
     return (
@@ -49,7 +50,7 @@ const AppRoutes = () => {
                 <Route path='carts' element={<Carts />} />
                 <Route path='orders' element={<Orders />} />
                 <Route path='payment/success/' element={<PaymentSuccess />} />    
-                    
+                <Route path='products/add/' element={<AddProduct />} />
             
                 
             </Route>
