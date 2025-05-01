@@ -43,7 +43,7 @@ const Navbar = ({sidebarOpen}) => {
                         </Link>
                     </li>
                     <li>
-                        <Link to='/settings'>Settings</Link>
+                        <Link to='/dashboard'>Dashboard</Link>
                     </li>
                     <li>
                        

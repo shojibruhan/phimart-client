@@ -8,6 +8,7 @@ const OrderTable = ({items}) => {
                 <thead>
                     <tr className="bg-gray-50 border-b">
                         <th className="px-4 py-3 text-left">Product</th>
+                        <th className="px-4 py-3 text-right">ID</th>
                         <th className="px-4 py-3 text-right">Price</th>
                         <th className="px-4 py-3 text-right">Quantity</th>
                         <th className="px-4 py-3 text-right">Total</th>

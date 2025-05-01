@@ -4,6 +4,8 @@ import AddtoCartButton from '../components/ProductDetails.jsx/AddtoCartButton';
 import { Link, useParams } from 'react-router';
 import { FaArrowLeft } from 'react-icons/fa';
 import apiClient from '../services/api-client';
+import ReviewSection from '../components/Reviews/ReviewSection';
+import ReviewForm from '../components/Reviews/ReviewForm';
 
 const ProductDetails = () => {
     const [product, setProduct]= useState(null)
@@ -88,6 +90,10 @@ const ProductDetails = () => {
                 {/* <div className='mt-auto'>
                     <AddtoCartButton product={product}/>
                 </div> */}
+             </div>
+             <div>
+                <ReviewSection />
+                {/* <ReviewForm /> */}
              </div>
         </div>
     );

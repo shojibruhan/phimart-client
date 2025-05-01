@@ -88,7 +88,7 @@ const Navbar = () => {
                                     <span className="badge">New</span>
                                 </a>
                                 </li>
-                                <li><a>Settings</a></li>
+                                <li><a href='/dashboard'>Dashboard</a></li>
                                 <li><a onClick={logoutUser}>Logout</a></li>
                             </ul>
                         </div>
